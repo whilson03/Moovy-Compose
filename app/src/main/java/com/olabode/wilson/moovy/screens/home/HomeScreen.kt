@@ -13,14 +13,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.olabode.wilson.moovy.screens.widgets.SearchBar
+import com.olabode.wilson.moovy.screens.widgets.UserAvatar
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
+import com.olabode.wilson.moovy.ui.theme.deepBlue
+import com.olabode.wilson.moovy.ui.theme.lightBlue
 
 @Composable
 fun HomeScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF5CA0D3))
+            .background(lightBlue)
 
     ) {
         Column(
@@ -54,7 +57,7 @@ fun HomeScreen() {
                         topEnd = 24.dp
                     )
                 )
-                .background(Color(0xFF2C3848))
+                .background(deepBlue)
                 .verticalScroll(state = rememberScrollState())
 
         ) {

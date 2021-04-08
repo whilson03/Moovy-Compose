@@ -1,4 +1,4 @@
-package com.olabode.wilson.moovy.screens.home
+package com.olabode.wilson.moovy.screens.widgets
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
