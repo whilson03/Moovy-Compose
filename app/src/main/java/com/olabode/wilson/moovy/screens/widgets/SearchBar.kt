@@ -1,7 +1,8 @@
 package com.olabode.wilson.moovy.screens.widgets
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -53,9 +54,42 @@ fun SearchBar(
             ),
             maxLines = 1,
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-            modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(30.dp))
+            modifier = modifier
+                .fillMaxWidth()
+                .clip(RoundedCornerShape(30.dp))
 
         )
+    }
+}
+
+@Composable
+fun NonClickSearchBar(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+    Box(modifier = modifier.height(40.dp)) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .background(Color.White)
+                .clickable { onClick() },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(Modifier.width(16.dp))
+            Icon(
+                imageVector = Icons.Rounded.Search,
+                contentDescription = "Search"
+            )
+            Spacer(Modifier.width(16.dp))
+            Text(text = text)
+        }
+    }
+
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewNonClickSearch() {
+    MoovyTheme {
+        NonClickSearchBar(text="search") {}
     }
 }
 

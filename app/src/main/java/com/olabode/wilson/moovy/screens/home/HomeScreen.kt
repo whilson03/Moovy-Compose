@@ -10,11 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
 import com.olabode.wilson.moovy.screens.Routes
+import com.olabode.wilson.moovy.screens.widgets.NonClickSearchBar
 import com.olabode.wilson.moovy.screens.widgets.SearchBar
 import com.olabode.wilson.moovy.screens.widgets.UserAvatar
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
@@ -42,12 +45,16 @@ fun HomeScreen(navController: NavController) {
                     .size(50.dp, 50.dp),
                 profileUrl = ""
             )
-            Spacer(modifier = Modifier.padding(8.dp))
-            SearchBar(
-                text = "",
-                onTextChange = { /*TODO*/ },
-                modifier = Modifier.padding(start = 8.dp, end = 8.dp)
-            )
+            Spacer(modifier = Modifier.padding(16.dp))
+            NonClickSearchBar(
+                modifier = Modifier
+                    .padding(start = 16.dp, end = 16.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.White),
+                text = "Search movie"
+            ){
+
+            }
         }
 
         Column(
@@ -103,6 +110,6 @@ fun HomeScreen(navController: NavController) {
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-        //HomeScreen()
+        HomeScreen(rememberNavController())
     }
 }
