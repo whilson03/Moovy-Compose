@@ -40,7 +40,7 @@ fun MovieDetailScreen() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(30.dp)
                 .clip(
                     RoundedCornerShape(
                         bottomEnd = 24.dp,
@@ -63,13 +63,17 @@ fun MovieDetailScreen() {
                     .padding(16.dp)
             ) {
                 Icon(
-                    modifier = Modifier.size(30.dp),
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clickable {  },
                     imageVector = Icons.Rounded.ArrowBack,
                     contentDescription = "search movie"
                 )
 
                 Icon(
-                    modifier = Modifier.size(30.dp),
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clickable { },
                     imageVector = Icons.Rounded.FavoriteBorder,
                     contentDescription = "search movie"
                 )
@@ -119,9 +123,11 @@ fun MovieDetailScreen() {
             modifier = Modifier.padding(start = 8.dp)
         )
         Spacer(modifier = Modifier.padding(8.dp))
-        
-        Row(modifier = Modifier
-            .fillMaxSize()) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 MoreInfoTitle(title = "Studio")
                 Spacer(modifier = Modifier.padding(1.dp))
@@ -142,19 +148,21 @@ fun MovieDetailScreen() {
 }
 
 @Composable
-fun MoreInfoTitle(title : String) {
-    Text(text = title,
+fun MoreInfoTitle(title: String) {
+    Text(
+        text = title,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1,
         color = Color.White,
         fontSize = 12.sp
-        )
+    )
 }
 
 
 @Composable
-fun MoreInfoValue(text : String) {
-    Text(text = text,
+fun MoreInfoValue(text: String) {
+    Text(
+        text = text,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1,
         color = Color.Gray,
@@ -167,6 +175,6 @@ fun MoreInfoValue(text : String) {
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-        MovieDetailScreen()
+        // MovieDetailScreen()
     }
 }
