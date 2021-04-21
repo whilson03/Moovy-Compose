@@ -22,13 +22,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.olabode.wilson.moovy.R
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
 
 
 @Composable
-fun MovieDetailScreen() {
+fun MovieDetailScreen(navController: NavController, movieId: Long) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,7 +41,7 @@ fun MovieDetailScreen() {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(30.dp)
+                .height(300.dp)
                 .clip(
                     RoundedCornerShape(
                         bottomEnd = 24.dp,
@@ -65,9 +66,12 @@ fun MovieDetailScreen() {
                 Icon(
                     modifier = Modifier
                         .size(30.dp)
-                        .clickable {  },
+                        .clip(RoundedCornerShape(30.dp))
+                        .clickable { navController.navigateUp() },
                     imageVector = Icons.Rounded.ArrowBack,
-                    contentDescription = "search movie"
+                    contentDescription = "search movie",
+                    tint = Color.White,
+
                 )
 
                 Icon(
@@ -75,7 +79,8 @@ fun MovieDetailScreen() {
                         .size(30.dp)
                         .clickable { },
                     imageVector = Icons.Rounded.FavoriteBorder,
-                    contentDescription = "search movie"
+                    contentDescription = "search movie",
+                    tint = Color.White
                 )
             }
 
@@ -175,6 +180,6 @@ fun MoreInfoValue(text: String) {
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-        // MovieDetailScreen()
+        //MovieDetailScreen()
     }
 }

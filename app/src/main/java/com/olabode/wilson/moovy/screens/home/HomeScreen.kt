@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
+import com.olabode.wilson.moovy.screens.Routes
 import com.olabode.wilson.moovy.screens.widgets.SearchBar
 import com.olabode.wilson.moovy.screens.widgets.UserAvatar
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
@@ -19,7 +22,7 @@ import com.olabode.wilson.moovy.ui.theme.deepBlue
 import com.olabode.wilson.moovy.ui.theme.lightBlue
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -71,7 +74,9 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.padding(8.dp))
             MovieList(
                 movies = movies,
-                onMovieClicked = { }
+                onMovieClicked = {
+                    navController.navigate("${Routes.DETAIL}/${it.id}")
+                }
             )
 
             Spacer(modifier = Modifier.padding(16.dp))
@@ -83,7 +88,9 @@ fun HomeScreen() {
             Spacer(modifier = Modifier.padding(8.dp))
             MovieList(
                 movies = movies,
-                onMovieClicked = { }
+                onMovieClicked = {
+                    navController.navigate("${Routes.DETAIL}/${it.id}")
+                }
             )
             Spacer(modifier = Modifier.padding(24.dp))
         }
