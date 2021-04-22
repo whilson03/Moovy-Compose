@@ -29,6 +29,9 @@ import com.olabode.wilson.moovy.ui.theme.lightBlue
 fun HomeScreen(navController: NavController, viewModel: MainViewModel) {
 
     val lazyMovieItems = viewModel.movies.collectAsLazyPagingItems()
+
+    val lazyTvSeriesItems = viewModel.tvSeries.collectAsLazyPagingItems()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -90,13 +93,13 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel) {
 
             Spacer(modifier = Modifier.padding(16.dp))
             SectionHeader(
-                sectionTitle = "Top Rated",
+                sectionTitle = "Tv Series",
                 actionTitle = "see all",
                 onActionClicked = { /*TODO*/ }
             )
             Spacer(modifier = Modifier.padding(8.dp))
-            MovieList(
-                movies = lazyMovieItems
+            TvSeriesList(
+                tvSeries = lazyTvSeriesItems
             ) {
                 navController.navigate("${Routes.DETAIL}/${it.id}")
             }

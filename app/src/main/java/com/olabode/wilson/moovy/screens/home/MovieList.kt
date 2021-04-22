@@ -18,14 +18,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
+import com.olabode.wilson.moovy.models.TvSeries
 import com.olabode.wilson.moovy.models.entity.Movie
 import com.olabode.wilson.moovy.screens.widgets.MovieItem
+import com.olabode.wilson.moovy.screens.widgets.TvSeriesItem
 
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 
 
 @Composable
-fun MovieList(modifier: Modifier = Modifier, movies: LazyPagingItems<Movie>, onMovieClicked: (Movie) -> Unit) {
+fun MovieList(
+    modifier: Modifier = Modifier,
+    movies: LazyPagingItems<Movie>,
+    onMovieClicked: (Movie) -> Unit
+) {
     LazyRow(modifier = modifier, content = {
         items(movies) { movie ->
             MovieItem(movie = movie!!, onMovieClicked)
@@ -33,9 +39,29 @@ fun MovieList(modifier: Modifier = Modifier, movies: LazyPagingItems<Movie>, onM
     })
 }
 
+@Composable
+fun TvSeriesList(
+    modifier: Modifier = Modifier,
+    tvSeries: LazyPagingItems<TvSeries>,
+    onMovieClicked: (TvSeries) -> Unit
+) {
+    LazyRow(modifier = modifier, content = {
+        items(tvSeries) { movie ->
+            TvSeriesItem(tvSeries = movie!!, onMovieClicked)
+        }
+    })
+}
+
+
+
 
 @Composable
-fun SectionHeader(modifier: Modifier = Modifier,sectionTitle: String, actionTitle: String, onActionClicked: () -> Unit) {
+fun SectionHeader(
+    modifier: Modifier = Modifier,
+    sectionTitle: String,
+    actionTitle: String,
+    onActionClicked: () -> Unit
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

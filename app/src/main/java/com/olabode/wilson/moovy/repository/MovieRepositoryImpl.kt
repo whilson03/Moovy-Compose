@@ -5,8 +5,10 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.olabode.wilson.moovy.api.DiscoverService
 import com.olabode.wilson.moovy.api.SearchService
+import com.olabode.wilson.moovy.models.TvSeries
 import com.olabode.wilson.moovy.models.entity.Movie
 import com.olabode.wilson.moovy.paging.MovieSource
+import com.olabode.wilson.moovy.paging.TvSeriesSource
 import com.olabode.wilson.moovy.utils.Constants
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -28,6 +30,16 @@ class MovieRepositoryImpl @Inject constructor(
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { MovieSource(discoverService) }
+        ).flow
+    }
+
+    override fun fetchTvSeries(): Flow<PagingData<TvSeries>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = Constants.NETWORK_PAGE_SIZE,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { TvSeriesSource(discoverService) }
         ).flow
     }
 }

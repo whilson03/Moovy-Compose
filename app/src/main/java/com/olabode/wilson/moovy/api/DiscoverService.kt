@@ -1,6 +1,7 @@
 package com.olabode.wilson.moovy.api
 
 import com.olabode.wilson.moovy.api.responses.main.DiscoverMovieResponse
+import com.olabode.wilson.moovy.api.responses.main.DiscoverTvResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -23,6 +24,6 @@ interface DiscoverService {
 
 
     @GET("discover/tv?language=en&sort_by=popularity.desc")
-    suspend fun fetchDiscoverTv(@Query("page") page: Int): DiscoverMovieResponse
+    suspend fun fetchDiscoverTv(@Query("page") page: Int): DiscoverTvResponse
 
 }
