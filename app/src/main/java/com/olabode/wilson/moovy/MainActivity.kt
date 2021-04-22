@@ -2,6 +2,7 @@ package com.olabode.wilson.moovy
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
@@ -13,25 +14,29 @@ import com.olabode.wilson.moovy.screens.Routes
 import com.olabode.wilson.moovy.screens.detail.MovieDetailScreen
 import com.olabode.wilson.moovy.screens.home.HomeScreen
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+    val mainViewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MoovyTheme {
-                ScreenNavigator()
+                ScreenNavigator(mainViewModel)
             }
         }
     }
 }
 
 @Composable
-fun ScreenNavigator() {
+fun ScreenNavigator(viewModel: MainViewModel) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.HOME) {
         composable(Routes.HOME) {
-            HomeScreen(navController)
+            HomeScreen(navController, viewModel = viewModel)
         }
 
         composable(

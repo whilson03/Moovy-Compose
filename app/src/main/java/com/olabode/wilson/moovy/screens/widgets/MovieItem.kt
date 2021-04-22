@@ -1,7 +1,6 @@
 package com.olabode.wilson.moovy.screens.widgets
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,17 +9,16 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.olabode.wilson.moovy.R
-import com.olabode.wilson.moovy.models.Movie
+import com.google.accompanist.coil.rememberCoilPainter
+import com.olabode.wilson.moovy.models.entity.Movie
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
+import com.olabode.wilson.moovy.utils.ImagesUtils
 
 @Composable
 fun MovieItem(movie: Movie, onMovieClicked: (Movie) -> Unit) {
@@ -39,10 +37,13 @@ fun MovieItem(movie: Movie, onMovieClicked: (Movie) -> Unit) {
 
         ) {
             Image(
-                painter = painterResource(id = R.drawable.aqua),
+                painter = rememberCoilPainter(
+                    request = ImagesUtils.getBackdropPath(movie.backdrop_path ?: ""),
+                    shouldRefetchOnSizeChange = { _, _ -> false },
+                ),
                 contentDescription = "",
+                modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
             )
         }
         Spacer(Modifier.height(8.dp))
@@ -66,6 +67,6 @@ fun MovieItem(movie: Movie, onMovieClicked: (Movie) -> Unit) {
 @Composable
 fun MovieItemPreview() {
     MoovyTheme {
-        MovieItem(sampleMovie, {})
+        // MovieItem(, {})
     }
-}val sampleMovie = Movie(2, "Avengers EndGame", 5)
+}

@@ -16,16 +16,19 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.olabode.wilson.moovy.MainViewModel
 import com.olabode.wilson.moovy.screens.Routes
 import com.olabode.wilson.moovy.screens.widgets.NonClickSearchBar
-import com.olabode.wilson.moovy.screens.widgets.SearchBar
 import com.olabode.wilson.moovy.screens.widgets.UserAvatar
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
 import com.olabode.wilson.moovy.ui.theme.lightBlue
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, viewModel: MainViewModel) {
+
+    val lazyMovieItems = viewModel.movies.collectAsLazyPagingItems()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +55,7 @@ fun HomeScreen(navController: NavController) {
                     .clip(RoundedCornerShape(20.dp))
                     .background(Color.White),
                 text = "Search movie"
-            ){
+            ) {
 
             }
         }
@@ -80,11 +83,10 @@ fun HomeScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             MovieList(
-                movies = movies,
-                onMovieClicked = {
-                    navController.navigate("${Routes.DETAIL}/${it.id}")
-                }
-            )
+                movies = lazyMovieItems
+            ) {
+                navController.navigate("${Routes.DETAIL}/${it.id}")
+            }
 
             Spacer(modifier = Modifier.padding(16.dp))
             SectionHeader(
@@ -94,11 +96,10 @@ fun HomeScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.padding(8.dp))
             MovieList(
-                movies = movies,
-                onMovieClicked = {
-                    navController.navigate("${Routes.DETAIL}/${it.id}")
-                }
-            )
+                movies = lazyMovieItems
+            ) {
+                navController.navigate("${Routes.DETAIL}/${it.id}")
+            }
             Spacer(modifier = Modifier.padding(24.dp))
         }
 
@@ -110,6 +111,6 @@ fun HomeScreen(navController: NavController) {
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-        HomeScreen(rememberNavController())
+      //  HomeScreen(rememberNavController())
     }
 }

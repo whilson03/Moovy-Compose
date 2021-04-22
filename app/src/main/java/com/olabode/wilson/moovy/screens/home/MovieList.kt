@@ -11,23 +11,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.olabode.wilson.moovy.models.Movie
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.items
+import com.olabode.wilson.moovy.models.entity.Movie
 import com.olabode.wilson.moovy.screens.widgets.MovieItem
-import com.olabode.wilson.moovy.screens.widgets.sampleMovie
+
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 
 
 @Composable
-fun MovieList(modifier: Modifier = Modifier, movies: List<Movie>, onMovieClicked: (Movie) -> Unit) {
+fun MovieList(modifier: Modifier = Modifier, movies: LazyPagingItems<Movie>, onMovieClicked: (Movie) -> Unit) {
     LazyRow(modifier = modifier, content = {
-        items(movies.size) { index ->
-            MovieItem(movie = movies[index], onMovieClicked)
+        items(movies) { movie ->
+            MovieItem(movie = movie!!, onMovieClicked)
         }
     })
 }
@@ -75,8 +76,4 @@ fun PreviewSectionHeader() {
             actionTitle = "see more",
             onActionClicked = { /*TODO*/ })
     }
-}
-
-val movies = List(10){
-    sampleMovie
 }
