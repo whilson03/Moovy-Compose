@@ -1,4 +1,4 @@
-package com.olabode.wilson.moovy.models.entity
+package com.olabode.wilson.moovy.models
 
 import android.os.Parcelable
 import com.olabode.wilson.moovy.models.Keyword
@@ -8,14 +8,17 @@ import com.olabode.wilson.moovy.models.Video
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 
 /**
  *   Created by OLABODE WILSON on 7/3/20.
  */
 
-
+@Parcelize
 data class Movie(
+    @Expose
+    @SerializedName("id")
     val id: Long,
 
     @Expose
@@ -69,4 +72,4 @@ data class Movie(
     @Expose
     @SerializedName("vote_average")
     val vote_average: Float
-)
+) :Parcelable

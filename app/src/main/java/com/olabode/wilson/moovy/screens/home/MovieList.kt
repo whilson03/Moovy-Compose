@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.olabode.wilson.moovy.models.TvSeries
-import com.olabode.wilson.moovy.models.entity.Movie
+import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.screens.widgets.MovieItem
 import com.olabode.wilson.moovy.screens.widgets.TvSeriesItem
 

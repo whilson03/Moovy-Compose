@@ -3,6 +3,7 @@ package com.olabode.wilson.moovy.api
 import com.olabode.wilson.moovy.api.responses.main.KeywordListResponse
 import com.olabode.wilson.moovy.api.responses.main.ReviewListResponse
 import com.olabode.wilson.moovy.api.responses.main.VideoListResponse
+import com.olabode.wilson.moovy.models.Movie
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -21,7 +22,7 @@ interface MovieService {
      * @return [KeywordListResponse] response
      */
     @GET("/3/movie/{movie_id}/keywords")
-    fun fetchKeywords(@Path("movie_id") id: Int): KeywordListResponse
+    suspend fun fetchKeywords(@Path("movie_id") id: Int): KeywordListResponse
 
     /**
      * [Movie Videos](https://developers.themoviedb.org/3/movies/get-movie-videos)
@@ -33,7 +34,7 @@ interface MovieService {
      * @return [VideoListResponse] response
      */
     @GET("/3/movie/{movie_id}/videos")
-    fun fetchVideos(@Path("movie_id") id: Int): VideoListResponse
+    suspend  fun fetchVideos(@Path("movie_id") id: Int): VideoListResponse
 
     /**
      * [Movie Reviews](https://developers.themoviedb.org/3/movies/get-movie-reviews)
@@ -45,5 +46,10 @@ interface MovieService {
      * @return [ReviewListResponse] response
      */
     @GET("/3/movie/{movie_id}/reviews")
-    fun fetchReviews(@Path("movie_id") id: Int): ReviewListResponse
+   suspend fun fetchReviews(@Path("movie_id") id: Int): ReviewListResponse
+
+
+    @GET("/3/movie/{movie_id}")
+    suspend fun fetchMovieDetails(@Path("movie_id") id: Int): Movie
+
 }

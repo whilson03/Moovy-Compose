@@ -3,8 +3,7 @@ package com.olabode.wilson.moovy.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.olabode.wilson.moovy.api.DiscoverService
-import com.olabode.wilson.moovy.models.entity.Movie
-import com.olabode.wilson.moovy.repository.MovieRepository
+import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.utils.Constants.NETWORK_PAGE_SIZE
 import retrofit2.HttpException
 import java.io.IOException

@@ -9,10 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.olabode.wilson.moovy.R
+import com.google.accompanist.coil.rememberCoilPainter
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 
 
@@ -31,7 +30,10 @@ fun UserAvatar(modifier: Modifier, profileUrl: String) {
 
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            painter = rememberCoilPainter(
+                request = profileUrl,
+                shouldRefetchOnSizeChange = { _, _ -> false },
+            ),
             contentDescription = ""
         )
     }

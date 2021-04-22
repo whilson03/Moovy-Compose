@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.olabode.wilson.moovy.models.TvSeries
-import com.olabode.wilson.moovy.models.entity.Movie
+import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.utils.ImagesUtils
 

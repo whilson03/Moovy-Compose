@@ -4,7 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.olabode.wilson.moovy.api.DiscoverService
 import com.olabode.wilson.moovy.models.TvSeries
-import com.olabode.wilson.moovy.models.entity.Movie
 import com.olabode.wilson.moovy.utils.Constants
 import retrofit2.HttpException
 import timber.log.Timber

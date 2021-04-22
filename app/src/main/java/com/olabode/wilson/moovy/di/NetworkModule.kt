@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.olabode.wilson.moovy.BuildConfig
 import com.olabode.wilson.moovy.api.DiscoverService
+import com.olabode.wilson.moovy.api.MovieService
 import com.olabode.wilson.moovy.api.RequestInterceptor
 import com.olabode.wilson.moovy.api.SearchService
 import com.olabode.wilson.moovy.utils.Constants
@@ -66,5 +67,13 @@ object NetworkModule {
         return retrofitBuilder
             .build()
             .create(SearchService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideMovieService(retrofitBuilder: Retrofit.Builder): MovieService {
+        return retrofitBuilder
+            .build()
+            .create(MovieService::class.java)
     }
 }

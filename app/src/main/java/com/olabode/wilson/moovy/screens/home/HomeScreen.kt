@@ -16,22 +16,34 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.olabode.wilson.moovy.MainViewModel
+import com.olabode.wilson.moovy.models.Movie
+import com.olabode.wilson.moovy.models.TvSeries
 import com.olabode.wilson.moovy.screens.Routes
 import com.olabode.wilson.moovy.screens.widgets.NonClickSearchBar
 import com.olabode.wilson.moovy.screens.widgets.UserAvatar
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
 import com.olabode.wilson.moovy.ui.theme.lightBlue
+import com.olabode.wilson.moovy.utils.Constants
+import timber.log.Timber
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: MainViewModel) {
-
     val lazyMovieItems = viewModel.movies.collectAsLazyPagingItems()
-
     val lazyTvSeriesItems = viewModel.tvSeries.collectAsLazyPagingItems()
+    HomeScreenContent(navController, lazyMovieItems, lazyTvSeriesItems)
+}
 
+
+@Composable
+private fun HomeScreenContent(
+    navController: NavController,
+    lazyMovieItems: LazyPagingItems<Movie>,
+    lazyTvSeriesItems: LazyPagingItems<TvSeries>
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -49,7 +61,7 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel) {
                     .align(Alignment.End)
                     .padding(16.dp)
                     .size(50.dp, 50.dp),
-                profileUrl = ""
+                profileUrl = Constants.PROFILE_URL
             )
             Spacer(modifier = Modifier.padding(16.dp))
             NonClickSearchBar(
@@ -88,7 +100,8 @@ fun HomeScreen(navController: NavController, viewModel: MainViewModel) {
             MovieList(
                 movies = lazyMovieItems
             ) {
-                navController.navigate("${Routes.DETAIL}/${it.id}")
+                Timber.e(it.toString())
+                navController.navigate("${Routes.DETAIL}/${it.id.toInt()}")
             }
 
             Spacer(modifier = Modifier.padding(16.dp))

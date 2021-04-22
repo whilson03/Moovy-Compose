@@ -3,9 +3,7 @@ package com.olabode.wilson.moovy.screens.detail
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.FavoriteBorder
@@ -15,21 +13,58 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.olabode.wilson.moovy.R
+import com.google.accompanist.coil.rememberCoilPainter
+import com.olabode.wilson.moovy.MovieDetailViewModel
+import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
+import com.olabode.wilson.moovy.utils.ImagesUtils
+import timber.log.Timber
 
 
 @Composable
-fun MovieDetailScreen(navController: NavController, movieId: Long) {
+fun MovieDetailScreen(
+    navController: NavController,
+    movieId: Int,
+    viewModel: MovieDetailViewModel
+) {
+    viewModel.onTriggerEvent(MovieDetailEvent.GetMovieEvent(movieId))
+    val loading = viewModel.loading.value
+    val movie = viewModel.movie.value
+    if (loading) {
+        LoadingScreen()
+    } else {
+        movie?.let {
+            Timber.e(it.toString())
+            MovieDetailContent(movie = it) {
+                viewModel.onNavigateBack()
+                navController.navigateUp()
+            }
+        }
+    }
+
+}
+
+@Composable
+fun LoadingScreen() {
+    Surface(color = deepBlue) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ){
+            CircularProgressIndicator()
+        }
+    }
+}
+
+@Composable
+private fun MovieDetailContent(movie: Movie, onBackPressed: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -51,7 +86,10 @@ fun MovieDetailScreen(navController: NavController, movieId: Long) {
 
         ) {
             Image(
-                painter = painterResource(id = R.drawable.avengers),
+                painter = rememberCoilPainter(
+                    request = ImagesUtils.getBackdropPath(movie.backdrop_path ?: ""),
+                    shouldRefetchOnSizeChange = { _, _ -> false },
+                ),
                 contentDescription = "",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier.fillMaxSize()
@@ -67,17 +105,16 @@ fun MovieDetailScreen(navController: NavController, movieId: Long) {
                     modifier = Modifier
                         .size(30.dp)
                         .clip(RoundedCornerShape(30.dp))
-                        .clickable { navController.navigateUp() },
+                        .clickable { onBackPressed() },
                     imageVector = Icons.Rounded.ArrowBack,
                     contentDescription = "search movie",
                     tint = Color.White,
-
                 )
 
                 Icon(
                     modifier = Modifier
                         .size(30.dp)
-                        .clickable { },
+                        .clickable {},
                     imageVector = Icons.Rounded.FavoriteBorder,
                     contentDescription = "search movie",
                     tint = Color.White
@@ -89,7 +126,7 @@ fun MovieDetailScreen(navController: NavController, movieId: Long) {
 
         Spacer(modifier = Modifier.padding(8.dp))
         Text(
-            text = "Movie Title",
+            text = movie.title,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
             fontSize = 24.sp,
@@ -113,7 +150,7 @@ fun MovieDetailScreen(navController: NavController, movieId: Long) {
         Spacer(modifier = Modifier.padding(16.dp))
 
         Text(
-            text = stringResource(R.string.movie_desc),
+            text = movie.overview,
             overflow = TextOverflow.Ellipsis,
             maxLines = 4,
             color = Color.LightGray,
@@ -180,6 +217,6 @@ fun MoreInfoValue(text: String) {
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-        //MovieDetailScreen()
+        //MovieDetailContent(){}
     }
 }

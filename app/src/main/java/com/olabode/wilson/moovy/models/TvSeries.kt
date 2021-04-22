@@ -1,8 +1,11 @@
 package com.olabode.wilson.moovy.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class TvSeries(
     @Expose
     @SerializedName("page")
@@ -55,4 +58,4 @@ data class TvSeries(
     @Expose
     @SerializedName("original_name")
     val original_name: String
-)
+) : Parcelable

@@ -19,19 +19,20 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     val mainViewModel: MainViewModel by viewModels()
+    val detailViewModel: MovieDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MoovyTheme {
-                ScreenNavigator(mainViewModel)
+                ScreenNavigator(mainViewModel, detailViewModel = detailViewModel)
             }
         }
     }
 }
 
 @Composable
-fun ScreenNavigator(viewModel: MainViewModel) {
+fun ScreenNavigator(viewModel: MainViewModel,detailViewModel: MovieDetailViewModel) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.HOME) {
@@ -41,12 +42,13 @@ fun ScreenNavigator(viewModel: MainViewModel) {
 
         composable(
             "${Routes.DETAIL}/{${Routes.DETAIL_ARG}}",
-            arguments = listOf(navArgument("movieId") { type = NavType.LongType })
+            arguments = listOf(navArgument("movieId") { type = NavType.IntType })
         ) { backStackEntry ->
             val arguments = requireNotNull(backStackEntry.arguments)
             MovieDetailScreen(
                 navController,
-                arguments.getLong("movieId", -1L)
+                arguments.getInt("movieId", -1),
+                detailViewModel
             )
         }
     }
