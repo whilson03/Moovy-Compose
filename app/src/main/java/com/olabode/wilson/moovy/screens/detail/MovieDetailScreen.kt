@@ -34,9 +34,9 @@ import com.olabode.wilson.moovy.utils.ImagesUtils
 
 @Composable
 fun MovieDetailScreen(
-    navController: NavController,
     movieId: Int,
-    viewModel: MovieDetailViewModel
+    viewModel: MovieDetailViewModel,
+    onNavigateBack : () -> Unit
 ) {
     viewModel.onTriggerEvent(MovieDetailEvent.GetMovieEvent(movieId))
     viewModel.onTriggerEvent(MovieDetailEvent.GetMovieCast(movieId))
@@ -55,7 +55,7 @@ fun MovieDetailScreen(
                     BackArrow(
                         icon = Icons.Rounded.ArrowBack,
                     ) {
-                        navController.navigateUp()
+                        onNavigateBack()
                     }
                 }
                 LoadingScreen()
@@ -65,7 +65,7 @@ fun MovieDetailScreen(
     } else {
         movie?.let {
             MovieDetailContent(movie = it, casts) {
-                navController.navigateUp()
+                onNavigateBack()
             }
         }
     }

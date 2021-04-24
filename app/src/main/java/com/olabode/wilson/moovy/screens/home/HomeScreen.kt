@@ -20,13 +20,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.models.TvSeries
-import com.olabode.wilson.moovy.screens.Routes
 import com.olabode.wilson.moovy.screens.widgets.NonClickSearchBar
 import com.olabode.wilson.moovy.screens.widgets.UserAvatar
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
@@ -36,20 +33,20 @@ import com.olabode.wilson.moovy.utils.Constants
 
 @Composable
 fun HomeScreen(
-    navController: NavController,
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel,
+    navigateToMovieDetail: (movieId: Int) -> Unit
 ) {
     val lazyMovieItems = viewModel.movies.collectAsLazyPagingItems()
     val lazyTvSeriesItems = viewModel.tvSeries.collectAsLazyPagingItems()
-    HomeScreenContent(navController, lazyMovieItems, lazyTvSeriesItems)
+    HomeScreenContent(lazyMovieItems, lazyTvSeriesItems, navigateToMovieDetail)
 }
 
 
 @Composable
 private fun HomeScreenContent(
-    navController: NavController,
     lazyMovieItems: LazyPagingItems<Movie>,
-    lazyTvSeriesItems: LazyPagingItems<TvSeries>
+    lazyTvSeriesItems: LazyPagingItems<TvSeries>,
+    navigateToMovieDetail: (movieId: Int) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -150,7 +147,7 @@ private fun HomeScreenContent(
             MovieList(
                 movies = lazyMovieItems
             ) {
-                navController.navigate("${Routes.DETAIL}/${it.id.toInt()}")
+                navigateToMovieDetail(it.id.toInt())
             }
 
             Spacer(modifier = Modifier.padding(16.dp))
@@ -163,7 +160,7 @@ private fun HomeScreenContent(
             TvSeriesList(
                 tvSeries = lazyTvSeriesItems
             ) {
-                navController.navigate("${Routes.DETAIL}/${it.id}")
+                navigateToMovieDetail(it.id!!)
             }
             Spacer(modifier = Modifier.padding(24.dp))
         }
@@ -176,6 +173,6 @@ private fun HomeScreenContent(
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-      ///  HomeScreenContent(rememberNavController())
+        ///  HomeScreenContent(rememberNavController())
     }
 }
