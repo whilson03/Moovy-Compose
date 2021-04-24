@@ -6,20 +6,24 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
-import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.olabode.wilson.moovy.MainViewModel
 import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.models.TvSeries
 import com.olabode.wilson.moovy.screens.Routes
@@ -29,12 +33,11 @@ import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
 import com.olabode.wilson.moovy.ui.theme.lightBlue
 import com.olabode.wilson.moovy.utils.Constants
-import timber.log.Timber
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    viewModel: MainViewModel
+    viewModel: HomeViewModel
 ) {
     val lazyMovieItems = viewModel.movies.collectAsLazyPagingItems()
     val lazyTvSeriesItems = viewModel.tvSeries.collectAsLazyPagingItems()
@@ -60,13 +63,56 @@ private fun HomeScreenContent(
                 .fillMaxHeight(0.30f)
 
         ) {
-            UserAvatar(
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .padding(16.dp)
-                    .size(50.dp, 50.dp),
-                profileUrl = Constants.PROFILE_URL
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = buildAnnotatedString {
+
+                        withStyle(
+                            style =
+                            SpanStyle(
+                                color = Color.White
+                            )
+                        ) {
+                            append("M")
+                        }
+
+                        withStyle(
+                            style =
+                            SpanStyle(
+                                color = deepBlue,
+                                fontStyle = FontStyle.Italic
+                            )
+                        ) {
+                            append("OO")
+                        }
+                        withStyle(
+                            style =
+                            SpanStyle(
+                                color = Color.White
+                            )
+                        ) {
+                            append("VY")
+                        }
+
+                    },
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(16.dp),
+                )
+
+                UserAvatar(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .size(50.dp, 50.dp),
+                    profileUrl = Constants.PROFILE_URL
+                )
+            }
+
             Spacer(modifier = Modifier.padding(16.dp))
             NonClickSearchBar(
                 modifier = Modifier
@@ -130,6 +176,6 @@ private fun HomeScreenContent(
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-       HomeScreen(rememberNavController(), viewModel())
+      ///  HomeScreenContent(rememberNavController())
     }
 }

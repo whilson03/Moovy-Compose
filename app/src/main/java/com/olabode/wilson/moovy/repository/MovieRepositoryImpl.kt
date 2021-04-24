@@ -15,7 +15,6 @@ import com.olabode.wilson.moovy.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -58,8 +57,7 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun fetchMovieCasts(movieId: Int): List<Cast> {
         return withContext(Dispatchers.IO) {
-           val cast = movieService.fetchMovieCast(movieId).cast
-            Timber.e(cast.toString())
+            val cast = movieService.fetchMovieCast(movieId).cast
             cast
         }
     }

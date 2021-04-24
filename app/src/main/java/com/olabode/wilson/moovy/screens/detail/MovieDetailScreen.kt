@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -18,14 +19,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.coil.rememberCoilPainter
-import com.olabode.wilson.moovy.MovieDetailViewModel
 import com.olabode.wilson.moovy.data.actors
 import com.olabode.wilson.moovy.data.sample_movie
 import com.olabode.wilson.moovy.models.Cast
 import com.olabode.wilson.moovy.models.Movie
+import com.olabode.wilson.moovy.screens.widgets.BackArrow
+import com.olabode.wilson.moovy.screens.widgets.RatingBar
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
 import com.olabode.wilson.moovy.utils.ImagesUtils
@@ -45,11 +46,25 @@ fun MovieDetailScreen(
     val casts = viewModel.casts.value
 
     if (loading) {
-        LoadingScreen()
+        Surface(color = deepBlue) {
+            Column {
+                Row(modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()) {
+
+                    BackArrow(
+                        icon = Icons.Rounded.ArrowBack,
+                    ) {
+                        navController.navigateUp()
+                    }
+                }
+                LoadingScreen()
+            }
+
+        }
     } else {
         movie?.let {
             MovieDetailContent(movie = it, casts) {
-                viewModel.onNavigateBack()
                 navController.navigateUp()
             }
         }
@@ -58,16 +73,16 @@ fun MovieDetailScreen(
 }
 
 @Composable
-fun LoadingScreen() {
-    Surface(color = deepBlue) {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator()
-        }
+fun LoadingScreen(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
     }
+
 }
+
 
 @Composable
 private fun MovieDetailContent(
@@ -111,15 +126,9 @@ private fun MovieDetailContent(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                Icon(
-                    modifier = Modifier
-                        .size(30.dp)
-                        .clip(RoundedCornerShape(30.dp))
-                        .clickable { onBackPressed() },
-                    imageVector = Icons.Rounded.ArrowBack,
-                    contentDescription = "search movie",
-                    tint = Color.White,
-                )
+                BackArrow(icon = Icons.Rounded.ArrowBack) {
+                    onBackPressed()
+                }
 
                 Icon(
                     modifier = Modifier
@@ -145,17 +154,26 @@ private fun MovieDetailContent(
             modifier = Modifier.padding(start = 16.dp)
         )
 
-        Spacer(modifier = Modifier.padding(8.dp))
+        Spacer(modifier = Modifier.padding(16.dp))
 
-        Text(
-            text = "Watch Now",
-            maxLines = 1,
-            modifier = Modifier
-                .padding(start = 16.dp)
-                .clip(RoundedCornerShape(16.dp))
-                .background(Color.LightGray)
-                .padding(8.dp)
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ){
+            Text(
+                text = "Watch Now",
+                maxLines = 1,
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.LightGray)
+                    .padding(8.dp)
+            )
+
+            // ADD RATING BAR TODO
+        }
+
 
         Spacer(modifier = Modifier.padding(16.dp))
 
@@ -167,9 +185,18 @@ private fun MovieDetailContent(
             modifier = Modifier.padding(start = 16.dp),
             style = MaterialTheme.typography.body2,
 
-        )
+            )
 
         Spacer(modifier = Modifier.padding(8.dp))
+
+        Text(
+            text = "Casts",
+            fontSize = 20.sp,
+            modifier = Modifier.padding(16.dp),
+            color = Color.White,
+            fontWeight = FontWeight.Medium
+        )
+
         ActorsList(
             actors = actors,
             onActorClicked = { /*TODO*/ },

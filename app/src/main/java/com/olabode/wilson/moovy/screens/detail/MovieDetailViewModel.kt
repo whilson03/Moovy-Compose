@@ -1,4 +1,4 @@
-package com.olabode.wilson.moovy
+package com.olabode.wilson.moovy.screens.detail
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.olabode.wilson.moovy.models.Cast
 import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.repository.MovieRepository
-import com.olabode.wilson.moovy.screens.detail.MovieDetailEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -68,11 +67,8 @@ class MovieDetailViewModel @Inject constructor(
         loading.value = false
     }
 
-    fun onNavigateBack() {
-        loading.value = false
-        movie.value = null
-        casts.value = emptyList()
+    override fun onCleared() {
+        super.onCleared()
+        Timber.d("MOVIE DETAIL VIEWMODEL CLEARED")
     }
-
-
 }
