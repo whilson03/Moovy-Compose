@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
@@ -31,7 +32,10 @@ import com.olabode.wilson.moovy.utils.Constants
 import timber.log.Timber
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: MainViewModel) {
+fun HomeScreen(
+    navController: NavController,
+    viewModel: MainViewModel
+) {
     val lazyMovieItems = viewModel.movies.collectAsLazyPagingItems()
     val lazyTvSeriesItems = viewModel.tvSeries.collectAsLazyPagingItems()
     HomeScreenContent(navController, lazyMovieItems, lazyTvSeriesItems)
@@ -100,7 +104,6 @@ private fun HomeScreenContent(
             MovieList(
                 movies = lazyMovieItems
             ) {
-                Timber.e(it.toString())
                 navController.navigate("${Routes.DETAIL}/${it.id.toInt()}")
             }
 
@@ -127,6 +130,6 @@ private fun HomeScreenContent(
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-      //  HomeScreen(rememberNavController())
+       HomeScreen(rememberNavController(), viewModel())
     }
 }

@@ -9,18 +9,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.olabode.wilson.moovy.R
+import com.google.accompanist.coil.rememberCoilPainter
+import com.olabode.wilson.moovy.data.actors
+import androidx.compose.ui.layout.ContentScale
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
+import com.olabode.wilson.moovy.utils.ImagesUtils
+import com.olabode.wilson.moovy.models.Cast
 
 @Composable
 fun ActorAvatar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    actor: Cast
 ) {
     Column(
         modifier = Modifier.padding(8.dp),
@@ -28,27 +32,34 @@ fun ActorAvatar(
     ) {
         Box(
             modifier = modifier
-                .size(width = 50.dp, 50.dp)
+                .size(width = 80.dp, 80.dp)
                 .clip(shape = CircleShape)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.a1),
-                contentDescription = ""
+                painter =  rememberCoilPainter(
+                    request = ImagesUtils.getBackdropPath(actor.profile_path ?: "") ,
+                    shouldRefetchOnSizeChange = { _, _ -> false },
+                ),
+                contentDescription = "",
+                contentScale = ContentScale.Crop,
             )
         }
         Spacer(modifier = Modifier.padding(4.dp))
 
         Text(
-            text = "firstName",
+            text = actor.original_name.take(20),
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
             fontSize = 13.sp,
             fontWeight = FontWeight.Medium,
-            color = Color.LightGray
+            color = Color.White,
+            style = androidx.compose.ui.text.TextStyle(
+
+            )
         )
 
         Text(
-            text = "LastName",
+            text = actor.character.take(20),
             overflow = TextOverflow.Ellipsis,
             maxLines = 1,
             fontSize = 13.sp,
@@ -61,8 +72,8 @@ fun ActorAvatar(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewHomeScreen() {
+fun PreviewAvatarScreen() {
     MoovyTheme {
-        ActorAvatar()
+        ActorAvatar(actor = actors[0])
     }
 }

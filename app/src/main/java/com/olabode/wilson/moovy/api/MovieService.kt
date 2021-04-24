@@ -1,5 +1,6 @@
 package com.olabode.wilson.moovy.api
 
+import com.olabode.wilson.moovy.api.responses.main.CastResponse
 import com.olabode.wilson.moovy.api.responses.main.KeywordListResponse
 import com.olabode.wilson.moovy.api.responses.main.ReviewListResponse
 import com.olabode.wilson.moovy.api.responses.main.VideoListResponse
@@ -34,7 +35,7 @@ interface MovieService {
      * @return [VideoListResponse] response
      */
     @GET("/3/movie/{movie_id}/videos")
-    suspend  fun fetchVideos(@Path("movie_id") id: Int): VideoListResponse
+    suspend fun fetchVideos(@Path("movie_id") id: Int): VideoListResponse
 
     /**
      * [Movie Reviews](https://developers.themoviedb.org/3/movies/get-movie-reviews)
@@ -46,10 +47,15 @@ interface MovieService {
      * @return [ReviewListResponse] response
      */
     @GET("/3/movie/{movie_id}/reviews")
-   suspend fun fetchReviews(@Path("movie_id") id: Int): ReviewListResponse
+    suspend fun fetchReviews(@Path("movie_id") id: Int): ReviewListResponse
 
 
     @GET("/3/movie/{movie_id}")
     suspend fun fetchMovieDetails(@Path("movie_id") id: Int): Movie
+
+
+    @GET("/3/movie/{movie_id}/credits")
+    suspend fun fetchMovieCast(@Path("movie_id") id: Int): CastResponse
+
 
 }

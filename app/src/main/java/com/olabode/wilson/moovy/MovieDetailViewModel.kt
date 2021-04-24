@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.olabode.wilson.moovy.models.Cast
 import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.repository.MovieRepository
 import com.olabode.wilson.moovy.screens.detail.MovieDetailEvent
@@ -21,6 +22,8 @@ class MovieDetailViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     val movie: MutableState<Movie?> = mutableStateOf(null)
+
+    val casts: MutableState<List<Cast>> = mutableStateOf(emptyList())
 
     val loading = mutableStateOf(false)
 
@@ -39,11 +42,22 @@ class MovieDetailViewModel @Inject constructor(
                             fetchMovieDetails(event.id)
                         }
                     }
+
+                    is MovieDetailEvent.GetMovieCast -> {
+                        if (casts.value.isEmpty()) {
+                            fetchMovieCasts(event.id)
+                        }
+                    }
                 }
             } catch (e: Exception) {
-                Timber.e(e)
+                Timber.e(e.cause)
             }
         }
+    }
+
+    private suspend fun fetchMovieCasts(id: Int) {
+        val casts = movieRepository.fetchMovieCasts(id)
+        this.casts.value = casts
     }
 
     private suspend fun fetchMovieDetails(id: Int) {
@@ -57,5 +71,8 @@ class MovieDetailViewModel @Inject constructor(
     fun onNavigateBack() {
         loading.value = false
         movie.value = null
+        casts.value = emptyList()
     }
+
+
 }

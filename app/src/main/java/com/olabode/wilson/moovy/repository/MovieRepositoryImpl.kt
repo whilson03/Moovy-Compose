@@ -6,14 +6,16 @@ import androidx.paging.PagingData
 import com.olabode.wilson.moovy.api.DiscoverService
 import com.olabode.wilson.moovy.api.MovieService
 import com.olabode.wilson.moovy.api.SearchService
-import com.olabode.wilson.moovy.models.TvSeries
+import com.olabode.wilson.moovy.models.Cast
 import com.olabode.wilson.moovy.models.Movie
+import com.olabode.wilson.moovy.models.TvSeries
 import com.olabode.wilson.moovy.paging.MovieSource
 import com.olabode.wilson.moovy.paging.TvSeriesSource
 import com.olabode.wilson.moovy.utils.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -51,6 +53,14 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun fetchMovieDetails(movieId: Int): Movie {
         return withContext(Dispatchers.IO) {
             movieService.fetchMovieDetails(movieId)
+        }
+    }
+
+    override suspend fun fetchMovieCasts(movieId: Int): List<Cast> {
+        return withContext(Dispatchers.IO) {
+           val cast = movieService.fetchMovieCast(movieId).cast
+            Timber.e(cast.toString())
+            cast
         }
     }
 }

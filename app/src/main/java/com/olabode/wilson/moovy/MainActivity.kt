@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -18,26 +19,23 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    val mainViewModel: MainViewModel by viewModels()
-    val detailViewModel: MovieDetailViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MoovyTheme {
-                ScreenNavigator(mainViewModel, detailViewModel = detailViewModel)
+                ScreenNavigator()
             }
         }
     }
 }
 
 @Composable
-fun ScreenNavigator(viewModel: MainViewModel,detailViewModel: MovieDetailViewModel) {
+fun ScreenNavigator() {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.HOME) {
         composable(Routes.HOME) {
-            HomeScreen(navController, viewModel = viewModel)
+            HomeScreen(navController, hiltNavGraphViewModel())
         }
 
         composable(
@@ -48,7 +46,7 @@ fun ScreenNavigator(viewModel: MainViewModel,detailViewModel: MovieDetailViewMod
             MovieDetailScreen(
                 navController,
                 arguments.getInt("movieId", -1),
-                detailViewModel
+                hiltNavGraphViewModel()
             )
         }
     }

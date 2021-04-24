@@ -18,14 +18,17 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.google.accompanist.coil.rememberCoilPainter
 import com.olabode.wilson.moovy.MovieDetailViewModel
+import com.olabode.wilson.moovy.data.actors
+import com.olabode.wilson.moovy.data.sample_movie
+import com.olabode.wilson.moovy.models.Cast
 import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
 import com.olabode.wilson.moovy.utils.ImagesUtils
-import timber.log.Timber
 
 
 @Composable
@@ -35,14 +38,17 @@ fun MovieDetailScreen(
     viewModel: MovieDetailViewModel
 ) {
     viewModel.onTriggerEvent(MovieDetailEvent.GetMovieEvent(movieId))
+    viewModel.onTriggerEvent(MovieDetailEvent.GetMovieCast(movieId))
+
     val loading = viewModel.loading.value
     val movie = viewModel.movie.value
+    val casts = viewModel.casts.value
+
     if (loading) {
         LoadingScreen()
     } else {
         movie?.let {
-            Timber.e(it.toString())
-            MovieDetailContent(movie = it) {
+            MovieDetailContent(movie = it, casts) {
                 viewModel.onNavigateBack()
                 navController.navigateUp()
             }
@@ -57,14 +63,18 @@ fun LoadingScreen() {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
-        ){
+        ) {
             CircularProgressIndicator()
         }
     }
 }
 
 @Composable
-private fun MovieDetailContent(movie: Movie, onBackPressed: () -> Unit) {
+private fun MovieDetailContent(
+    movie: Movie,
+    actors: List<Cast>,
+    onBackPressed: () -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -152,10 +162,11 @@ private fun MovieDetailContent(movie: Movie, onBackPressed: () -> Unit) {
         Text(
             text = movie.overview,
             overflow = TextOverflow.Ellipsis,
-            maxLines = 4,
+            maxLines = 8,
             color = Color.LightGray,
             modifier = Modifier.padding(start = 16.dp),
-            style = MaterialTheme.typography.body2
+            style = MaterialTheme.typography.body2,
+
         )
 
         Spacer(modifier = Modifier.padding(8.dp))
@@ -183,7 +194,7 @@ private fun MovieDetailContent(movie: Movie, onBackPressed: () -> Unit) {
                 Spacer(modifier = Modifier.padding(1.dp))
                 MoreInfoValue(text = "Action, Adventure, Fantasy")
                 Spacer(modifier = Modifier.padding(1.dp))
-                MoreInfoValue(text = "2018")
+                MoreInfoValue(text = movie.release_date)
             }
         }
     }
@@ -217,6 +228,6 @@ fun MoreInfoValue(text: String) {
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-        //MovieDetailContent(){}
+        MovieDetailContent(sample_movie, actors = actors) {}
     }
 }

@@ -1,5 +1,6 @@
 package com.olabode.wilson.moovy.data
 
+import com.olabode.wilson.moovy.models.Cast
 import com.olabode.wilson.moovy.models.Movie
 
 val sample_movie = Movie(
@@ -22,3 +23,8 @@ val sample_movie = Movie(
     videos = arrayListOf(),
     genre_ids = arrayListOf()
 )
+
+
+val actors = List(10){
+    Cast(1,"wilson","", "olabode")
+}

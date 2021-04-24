@@ -1,6 +1,7 @@
 package com.olabode.wilson.moovy.repository
 
 import androidx.paging.PagingData
+import com.olabode.wilson.moovy.models.Cast
 import com.olabode.wilson.moovy.models.TvSeries
 import com.olabode.wilson.moovy.models.Movie
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +17,9 @@ interface MovieRepository {
     fun fetchTvSeries(): Flow<PagingData<TvSeries>>
 
     suspend fun fetchMovieDetails(movieId: Int): Movie
+
+    suspend fun fetchMovieCasts(movieId : Int) : List<Cast>
+
 
    // fun searchMovies(query: String): Flow<PagingData<Movie>>
 }

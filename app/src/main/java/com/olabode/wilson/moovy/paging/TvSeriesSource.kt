@@ -19,7 +19,6 @@ class TvSeriesSource @Inject constructor(
 
         return try {
             val response = discoverService.fetchDiscoverTv(position)
-            Timber.e(response.toString())
             val movies = response.results
             val nextKey = if (movies.isEmpty()) {
                 null
