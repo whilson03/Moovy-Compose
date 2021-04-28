@@ -89,7 +89,7 @@ private fun HomeScreenContent(
                         withStyle(
                             style =
                             SpanStyle(
-                                color = Color.White
+                                color = deepBlue
                             )
                         ) {
                             append("VY")

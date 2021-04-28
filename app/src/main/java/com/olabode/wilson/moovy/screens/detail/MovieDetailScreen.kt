@@ -1,5 +1,6 @@
 package com.olabode.wilson.moovy.screens.detail
 
+
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
@@ -19,14 +19,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import com.google.accompanist.coil.rememberCoilPainter
 import com.olabode.wilson.moovy.data.actors
 import com.olabode.wilson.moovy.data.sample_movie
 import com.olabode.wilson.moovy.models.Cast
 import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.screens.widgets.BackArrow
-import com.olabode.wilson.moovy.screens.widgets.RatingBar
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
 import com.olabode.wilson.moovy.utils.ImagesUtils
@@ -36,7 +34,7 @@ import com.olabode.wilson.moovy.utils.ImagesUtils
 fun MovieDetailScreen(
     movieId: Int,
     viewModel: MovieDetailViewModel,
-    onNavigateBack : () -> Unit
+    onNavigateBack: () -> Unit
 ) {
     viewModel.onTriggerEvent(MovieDetailEvent.GetMovieEvent(movieId))
     viewModel.onTriggerEvent(MovieDetailEvent.GetMovieCast(movieId))
@@ -48,9 +46,11 @@ fun MovieDetailScreen(
     if (loading) {
         Surface(color = deepBlue) {
             Column {
-                Row(modifier = Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()) {
+                Row(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                ) {
 
                     BackArrow(
                         icon = Icons.Rounded.ArrowBack,
@@ -90,6 +90,8 @@ private fun MovieDetailContent(
     actors: List<Cast>,
     onBackPressed: () -> Unit
 ) {
+
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -97,6 +99,7 @@ private fun MovieDetailContent(
             .background(deepBlue)
             .verticalScroll(rememberScrollState())
     ) {
+
 
         Box(
             modifier = Modifier
@@ -160,7 +163,7 @@ private fun MovieDetailContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
-        ){
+        ) {
             Text(
                 text = "Watch Now",
                 maxLines = 1,
@@ -170,10 +173,7 @@ private fun MovieDetailContent(
                     .background(Color.LightGray)
                     .padding(8.dp)
             )
-
-            // ADD RATING BAR TODO
         }
-
 
         Spacer(modifier = Modifier.padding(16.dp))
 
