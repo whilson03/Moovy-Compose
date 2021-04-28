@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.olabode.wilson.moovy.screens.detail.MovieDetailScreen
 import com.olabode.wilson.moovy.screens.home.HomeScreen
+import com.olabode.wilson.moovy.screens.search.SearchScreen
 
 @Composable
 fun ScreenNavigator() {
@@ -13,9 +14,15 @@ fun ScreenNavigator() {
 
     NavHost(navController = navController, startDestination = Routes.HOME) {
         composable(Routes.HOME) {
-            HomeScreen(hiltNavGraphViewModel()) { id ->
-                navController.navigate("${Routes.DETAIL}/${id}")
-            }
+            HomeScreen(
+                hiltNavGraphViewModel(),
+                navigateToMovieDetail = { id ->
+                    navController.navigate("${Routes.DETAIL}/${id}")
+                },
+                navigateToSearchScreen = {
+                    navController.navigate(Routes.SEARCH)
+                }
+            )
         }
 
         composable(
@@ -27,6 +34,12 @@ fun ScreenNavigator() {
                 arguments.getInt("movieId", -1),
                 hiltNavGraphViewModel()
             ) {
+                navController.navigateUp()
+            }
+        }
+
+        composable(Routes.SEARCH) {
+            SearchScreen() {
                 navController.navigateUp()
             }
         }

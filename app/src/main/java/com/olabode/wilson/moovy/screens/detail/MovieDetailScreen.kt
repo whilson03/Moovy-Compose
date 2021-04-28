@@ -24,7 +24,7 @@ import com.olabode.wilson.moovy.data.actors
 import com.olabode.wilson.moovy.data.sample_movie
 import com.olabode.wilson.moovy.models.Cast
 import com.olabode.wilson.moovy.models.Movie
-import com.olabode.wilson.moovy.screens.widgets.BackArrow
+import com.olabode.wilson.moovy.screens.widgets.SquircleIconButton
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
 import com.olabode.wilson.moovy.utils.ImagesUtils
@@ -52,7 +52,7 @@ fun MovieDetailScreen(
                         .fillMaxWidth()
                 ) {
 
-                    BackArrow(
+                    SquircleIconButton(
                         icon = Icons.Rounded.ArrowBack,
                     ) {
                         onNavigateBack()
@@ -129,18 +129,12 @@ private fun MovieDetailContent(
                     .fillMaxWidth()
                     .padding(16.dp)
             ) {
-                BackArrow(icon = Icons.Rounded.ArrowBack) {
+                SquircleIconButton(icon = Icons.Rounded.ArrowBack) {
                     onBackPressed()
                 }
 
-                Icon(
-                    modifier = Modifier
-                        .size(30.dp)
-                        .clickable {},
-                    imageVector = Icons.Rounded.FavoriteBorder,
-                    contentDescription = "search movie",
-                    tint = Color.White
-                )
+                SquircleIconButton(icon = Icons.Rounded.FavoriteBorder) {
+                }
             }
 
 
@@ -173,6 +167,9 @@ private fun MovieDetailContent(
                     .background(Color.LightGray)
                     .padding(8.dp)
             )
+
+
+
         }
 
         Spacer(modifier = Modifier.padding(16.dp))

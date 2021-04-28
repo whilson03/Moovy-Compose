@@ -24,7 +24,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.models.TvSeries
-import com.olabode.wilson.moovy.screens.widgets.NonClickSearchBar
+import com.olabode.wilson.moovy.screens.widgets.SearchBarItem
 import com.olabode.wilson.moovy.screens.widgets.UserAvatar
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.deepBlue
@@ -34,11 +34,18 @@ import com.olabode.wilson.moovy.utils.Constants
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel,
-    navigateToMovieDetail: (movieId: Int) -> Unit
+    navigateToMovieDetail: (movieId: Int) -> Unit,
+    navigateToSearchScreen: () -> Unit
 ) {
     val lazyMovieItems = viewModel.movies.collectAsLazyPagingItems()
     val lazyTvSeriesItems = viewModel.tvSeries.collectAsLazyPagingItems()
-    HomeScreenContent(lazyMovieItems, lazyTvSeriesItems, navigateToMovieDetail)
+
+    HomeScreenContent(
+        lazyMovieItems,
+        lazyTvSeriesItems,
+        navigateToMovieDetail,
+        navigateToSearchScreen
+    )
 }
 
 
@@ -46,7 +53,8 @@ fun HomeScreen(
 private fun HomeScreenContent(
     lazyMovieItems: LazyPagingItems<Movie>,
     lazyTvSeriesItems: LazyPagingItems<TvSeries>,
-    navigateToMovieDetail: (movieId: Int) -> Unit
+    navigateToMovieDetail: (movieId: Int) -> Unit,
+    navigateToSearchScreen: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -111,14 +119,14 @@ private fun HomeScreenContent(
             }
 
             Spacer(modifier = Modifier.padding(16.dp))
-            NonClickSearchBar(
+            SearchBarItem(
                 modifier = Modifier
                     .padding(start = 16.dp, end = 16.dp)
                     .clip(RoundedCornerShape(20.dp))
                     .background(Color.White),
                 text = "Search movie"
             ) {
-
+                navigateToSearchScreen()
             }
         }
 

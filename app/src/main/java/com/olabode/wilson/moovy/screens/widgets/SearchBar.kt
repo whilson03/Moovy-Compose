@@ -63,7 +63,7 @@ fun SearchBar(
 }
 
 @Composable
-fun NonClickSearchBar(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+fun SearchBarItem(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
     Box(modifier = modifier.height(40.dp)) {
         Row(
             modifier = Modifier
@@ -89,7 +89,7 @@ fun NonClickSearchBar(modifier: Modifier = Modifier, text: String, onClick: () -
 @Composable
 fun PreviewNonClickSearch() {
     MoovyTheme {
-        NonClickSearchBar(text="search") {}
+        SearchBarItem(text="search") {}
     }
 }
 
