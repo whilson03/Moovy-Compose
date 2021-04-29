@@ -24,13 +24,14 @@ fun SquircleIconButton(
     modifier: Modifier = Modifier,
     icon: ImageVector,
     color: Color = Color.White,
+    bgColor: Color = deepBlue,
     onBackPressed: () -> Unit
 ) {
     Icon(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
             .background(
-                brush = Brush.horizontalGradient(colors = listOf(deepBlue, deepBlue)),
+                brush = Brush.horizontalGradient(colors = listOf(bgColor, bgColor)),
                 RectangleShape,
                 0.5f
             )

@@ -3,7 +3,6 @@ package com.olabode.wilson.moovy.screens.widgets
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -14,8 +13,9 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,42 +24,44 @@ import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 
 @Composable
 fun SearchBar(
-    text: String,
-    onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    text: String,
+    bgColor: Color = Color.White,
+    textColor: Color = Color.DarkGray,
+    focusedIndicatorColor: Color = Color.Transparent,
+    unfocusedIndicatorColor: Color = Color.Transparent,
+    leadingIconColor: Color = Color.DarkGray,
+    onTextChange: (String) -> Unit
 ) {
-    Row(
+
+    TextField(
+        value = if (text.isNotEmpty()) text else "Search",
+        onValueChange = onTextChange,
+
+
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Rounded.Search,
+                contentDescription = "search movie"
+            )
+        },
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = focusedIndicatorColor,
+            unfocusedIndicatorColor = unfocusedIndicatorColor,
+            leadingIconColor = leadingIconColor,
+            textColor = textColor
+        ),
+        maxLines = 1,
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(30.dp)),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        TextField(
-            value = if (text.isNotEmpty()) text else "Search",
-            onValueChange = onTextChange,
+            .background(
+                brush = Brush.horizontalGradient(colors = listOf(bgColor, bgColor)),
+                RectangleShape,
+                0.5f
+            )
+    )
 
-
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Rounded.Search,
-                    contentDescription = "search movie"
-                )
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                leadingIconColor = Color.DarkGray,
-                textColor = Color.DarkGray
-            ),
-            maxLines = 1,
-            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-            modifier = modifier
-                .fillMaxWidth()
-                .clip(RoundedCornerShape(30.dp))
-
-        )
-    }
 }
 
 @Composable
@@ -89,7 +91,7 @@ fun SearchBarItem(modifier: Modifier = Modifier, text: String, onClick: () -> Un
 @Composable
 fun PreviewNonClickSearch() {
     MoovyTheme {
-        SearchBarItem(text="search") {}
+        SearchBarItem(text = "search") {}
     }
 }
 
@@ -98,6 +100,6 @@ fun PreviewNonClickSearch() {
 @Composable
 fun PreviewSearch() {
     MoovyTheme {
-        SearchBar("", {}, Modifier)
+        SearchBar(text = "", onTextChange = {})
     }
 }

@@ -39,9 +39,15 @@ fun ScreenNavigator() {
         }
 
         composable(Routes.SEARCH) {
-            SearchScreen() {
-                navController.navigateUp()
-            }
+            SearchScreen(
+                hiltNavGraphViewModel(),
+                navigateToMovieDetail = { id ->
+                    navController.navigate("${Routes.DETAIL}/${id}")
+                },
+                onNavigateBack = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }

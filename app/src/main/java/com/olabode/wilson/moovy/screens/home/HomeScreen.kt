@@ -181,6 +181,6 @@ private fun HomeScreenContent(
 @Composable
 fun PreviewHomeScreen() {
     MoovyTheme {
-        ///  HomeScreenContent(rememberNavController())
+
     }
 }
