@@ -7,5 +7,5 @@ import com.olabode.wilson.moovy.models.Movie
 data class MovieSearchResponse(
     @Expose @SerializedName("total_results") val totalResult: Int = 0,
     @Expose @SerializedName("total_pages") val totalPages: Int = 0,
-    @Expose @SerializedName("results") val items: List<Movie> = emptyList()
+    @Expose @SerializedName("results") val results: List<Movie> = emptyList()
 )

@@ -9,7 +9,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.runtime.Composable
+
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -20,7 +22,6 @@ import androidx.compose.ui.unit.sp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.olabode.wilson.moovy.models.Movie
-import com.olabode.wilson.moovy.screens.home.HomeViewModel
 import com.olabode.wilson.moovy.screens.widgets.SearchBar
 import com.olabode.wilson.moovy.screens.widgets.SquircleIconButton
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
@@ -28,27 +29,33 @@ import com.olabode.wilson.moovy.ui.theme.deepBlue
 import com.olabode.wilson.moovy.ui.theme.lightBlue
 
 
+@ExperimentalComposeUiApi
 @Composable
 fun SearchScreen(
-    viewModel: HomeViewModel,
+    viewModel: SearchViewModel,
     navigateToMovieDetail: (movieId: Int) -> Unit,
     onNavigateBack: () -> Unit
 ) {
-    val lazyMovieItems = viewModel.movies.collectAsLazyPagingItems()
-
-    SearchScreenContent(
-        onQueryTextChanged = { },
-        navigateToMovieDetail = navigateToMovieDetail,
-        onNavigateBack = onNavigateBack,
-        lazyMovieItems = lazyMovieItems
-    )
+//    val lazyMovieItems = viewModel.currentSearchResult.collectAsLazyPagingItems()
+//
+//    SearchScreenContent(
+//        query = viewModel.currentQueryValue.value,
+//        onQueryTextChanged = viewModel::onQueryTextChanged,
+//        navigateToMovieDetail = navigateToMovieDetail,
+//        onNavigateBack = onNavigateBack,
+//        lazyMovieItems = lazyMovieItems,
+//        onSearchAction = viewModel::performSearch
+//    )
 }
 
+@ExperimentalComposeUiApi
 @Composable
 fun SearchScreenContent(
-    lazyMovieItems: LazyPagingItems<Movie>,
+    query: String,
+    lazyMovieItems: LazyPagingItems<Movie>?,
     onQueryTextChanged: (String) -> Unit,
     navigateToMovieDetail: (movieId: Int) -> Unit,
+    onSearchAction: () -> Unit,
     onNavigateBack: () -> Unit
 ) {
     Column(
@@ -78,13 +85,15 @@ fun SearchScreenContent(
             )
 
             SquircleIconButton(icon = Icons.Rounded.Info, bgColor = lightBlue) {
+                onSearchAction()
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
 
         SearchBar(
-            text = "enter movie title",
+            text = query,
             onTextChange = onQueryTextChanged,
+            onImeAction = onSearchAction,
             bgColor = lightBlue,
             leadingIconColor = Color.White,
             textColor = Color.White,
@@ -103,10 +112,11 @@ fun SearchScreenContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        SearchedMovieResultList(movies = lazyMovieItems) {
-            navigateToMovieDetail(it.id.toInt())
+        lazyMovieItems?.let {
+            SearchedMovieResultList(movies = lazyMovieItems) {
+                navigateToMovieDetail(it.id.toInt())
+            }
         }
-
     }
 }
 

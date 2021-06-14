@@ -1,6 +1,7 @@
 package com.olabode.wilson.moovy.screens.widgets
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,10 +18,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.coil.rememberCoilPainter
 import com.olabode.wilson.moovy.data.sample_movie
-import com.olabode.wilson.moovy.models.TvSeries
 import com.olabode.wilson.moovy.models.Movie
+import com.olabode.wilson.moovy.models.TvSeries
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
+import com.olabode.wilson.moovy.ui.theme.amber
 import com.olabode.wilson.moovy.utils.ImagesUtils
+
+private fun getColorForRating(value: Float = 0f): Color {
+    return when {
+        value >= 7 -> Color.Green
+        value >= 5 -> amber
+        else -> Color.Red
+    }
+}
 
 @Composable
 fun MovieItem(
@@ -62,8 +72,19 @@ fun MovieItem(
             overflow = TextOverflow.Ellipsis,
             color = Color.White
         )
+        Spacer(Modifier.height(2.dp))
 
-
+        Text(
+            text = movie.vote_average.toString(),
+            style = MaterialTheme.typography.subtitle2,
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .clip(RoundedCornerShape(4.dp))
+                .background(color = getColorForRating(movie.vote_average))
+                .padding(start = 8.dp, end = 8.dp),
+            color = Color.White
+        )
+        Spacer(Modifier.height(4.dp))
     }
 }
 
@@ -97,7 +118,7 @@ fun TvSeriesItem(tvSeries: TvSeries, onMovieClicked: (TvSeries) -> Unit) {
         Spacer(Modifier.height(8.dp))
 
         Text(
-            text = tvSeries.original_name?:"",
+            text = tvSeries.original_name ?: "",
             style = MaterialTheme.typography.h6,
             modifier = Modifier.padding(start = 8.dp, end = 8.dp),
             fontWeight = FontWeight.Medium,
@@ -106,6 +127,19 @@ fun TvSeriesItem(tvSeries: TvSeries, onMovieClicked: (TvSeries) -> Unit) {
             color = Color.White
         )
 
+        Spacer(Modifier.height(2.dp))
+
+        Text(
+            text = tvSeries.vote_average.toString(),
+            style = MaterialTheme.typography.subtitle2,
+            modifier = Modifier
+                .padding(start = 8.dp)
+                .clip(RoundedCornerShape(4.dp))
+                .background(color = getColorForRating(tvSeries.vote_average ?: 0f))
+                .padding(start = 8.dp, end = 8.dp),
+            color = Color.White
+        )
+        Spacer(Modifier.height(4.dp))
 
     }
 }
@@ -115,6 +149,6 @@ fun TvSeriesItem(tvSeries: TvSeries, onMovieClicked: (TvSeries) -> Unit) {
 @Composable
 fun MovieItemPreview() {
     MoovyTheme {
-         MovieItem(sample_movie) {}
+        MovieItem(sample_movie) {}
     }
 }

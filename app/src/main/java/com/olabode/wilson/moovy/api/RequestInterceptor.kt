@@ -16,7 +16,6 @@ internal class RequestInterceptor : Interceptor {
 
         val requestBuilder = originalRequest.newBuilder().url(url)
         val request = requestBuilder.build()
-        Timber.d(request.url.toString())
         return chain.proceed(request)
     }
 }

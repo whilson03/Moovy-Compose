@@ -51,6 +51,5 @@ fun PreviewBackArrow() {
         SquircleIconButton(icon = Icons.Rounded.ArrowBack) {
 
         }
-
     }
 }

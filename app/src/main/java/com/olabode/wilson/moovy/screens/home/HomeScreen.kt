@@ -40,6 +40,7 @@ fun HomeScreen(
     val lazyMovieItems = viewModel.movies.collectAsLazyPagingItems()
     val lazyTvSeriesItems = viewModel.tvSeries.collectAsLazyPagingItems()
 
+
     HomeScreenContent(
         lazyMovieItems,
         lazyTvSeriesItems,
@@ -65,11 +66,17 @@ private fun HomeScreenContent(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(0.30f)
+                .fillMaxHeight(0.20f)
 
         ) {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 16.dp,
+                        end = 16.dp,
+                        top = 8.dp
+                    ),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -104,21 +111,19 @@ private fun HomeScreenContent(
                         }
 
                     },
-                    fontSize = 30.sp,
+                    fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
-                        .padding(16.dp),
                 )
 
                 UserAvatar(
                     modifier = Modifier
-                        .padding(16.dp)
-                        .size(50.dp, 50.dp),
+                        .size(40.dp, 40.dp),
                     profileUrl = Constants.PROFILE_URL
                 )
             }
 
-            Spacer(modifier = Modifier.padding(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             SearchBarItem(
                 modifier = Modifier
                     .padding(start = 16.dp, end = 16.dp)
@@ -129,6 +134,7 @@ private fun HomeScreenContent(
                 navigateToSearchScreen()
             }
         }
+        Spacer(modifier = Modifier.height(16.dp))
 
         Column(
             modifier = Modifier
@@ -144,31 +150,37 @@ private fun HomeScreenContent(
                 .verticalScroll(state = rememberScrollState())
 
         ) {
-            Spacer(modifier = Modifier.padding(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-            SectionHeader(
+            Section(Modifier.padding(
+                start = 4.dp,
+                end = 4.dp
+            ),
                 sectionTitle = "Recommended",
                 actionTitle = "see all",
                 onActionClicked = { /*TODO*/ }
-            )
-            Spacer(modifier = Modifier.padding(8.dp))
-            MovieList(
-                movies = lazyMovieItems
             ) {
-                navigateToMovieDetail(it.id.toInt())
+                MovieList(
+                    movies = lazyMovieItems
+                ) {
+                    navigateToMovieDetail(it.id.toInt())
+                }
             }
+            Spacer(modifier = Modifier.padding(8.dp))
 
-            Spacer(modifier = Modifier.padding(16.dp))
-            SectionHeader(
+            Section(Modifier.padding(
+                start = 4.dp,
+                end = 4.dp
+            ),
                 sectionTitle = "Tv Series",
                 actionTitle = "see all",
                 onActionClicked = { /*TODO*/ }
-            )
-            Spacer(modifier = Modifier.padding(8.dp))
-            TvSeriesList(
-                tvSeries = lazyTvSeriesItems
             ) {
-                navigateToMovieDetail(it.id!!)
+                TvSeriesList(
+                    tvSeries = lazyTvSeriesItems
+                ) {
+                    navigateToMovieDetail(it.id!!)
+                }
             }
             Spacer(modifier = Modifier.padding(24.dp))
         }

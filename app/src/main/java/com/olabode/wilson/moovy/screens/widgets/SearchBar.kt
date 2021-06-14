@@ -3,6 +3,7 @@ package com.olabode.wilson.moovy.screens.widgets
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -12,16 +13,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 
 
+@ExperimentalComposeUiApi
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
@@ -31,13 +35,13 @@ fun SearchBar(
     focusedIndicatorColor: Color = Color.Transparent,
     unfocusedIndicatorColor: Color = Color.Transparent,
     leadingIconColor: Color = Color.DarkGray,
+    onImeAction: () -> Unit = {},
     onTextChange: (String) -> Unit
 ) {
-
+    val keyboardController = LocalSoftwareKeyboardController.current
     TextField(
-        value = if (text.isNotEmpty()) text else "Search",
+        value = text,
         onValueChange = onTextChange,
-
 
         leadingIcon = {
             Icon(
@@ -52,7 +56,11 @@ fun SearchBar(
             textColor = textColor
         ),
         maxLines = 1,
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
+        keyboardActions = KeyboardActions(onSearch = {
+            onImeAction()
+            keyboardController?.hide()
+        }),
         modifier = modifier
             .fillMaxWidth()
             .background(
@@ -96,10 +104,11 @@ fun PreviewNonClickSearch() {
 }
 
 
+@ExperimentalComposeUiApi
 @Preview(showBackground = true)
 @Composable
 fun PreviewSearch() {
     MoovyTheme {
-        SearchBar(text = "", onTextChange = {})
+        SearchBar(text = "", onTextChange = {}, onImeAction = {})
     }
 }

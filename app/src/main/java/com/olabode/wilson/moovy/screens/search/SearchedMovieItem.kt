@@ -54,9 +54,7 @@ fun SearchedMovieItem(
             modifier = Modifier
                 .fillMaxHeight()
                 .width(120.dp)
-                .clip(CutCornerShape(
-                    16.dp
-                )),
+                .clip(CutCornerShape(16.dp)),
             contentScale = ContentScale.Crop,
         )
 

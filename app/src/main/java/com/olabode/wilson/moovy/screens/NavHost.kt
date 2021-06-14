@@ -1,6 +1,7 @@
 package com.olabode.wilson.moovy.screens
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltNavGraphViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
@@ -8,6 +9,7 @@ import com.olabode.wilson.moovy.screens.detail.MovieDetailScreen
 import com.olabode.wilson.moovy.screens.home.HomeScreen
 import com.olabode.wilson.moovy.screens.search.SearchScreen
 
+@ExperimentalComposeUiApi
 @Composable
 fun ScreenNavigator() {
     val navController = rememberNavController()
