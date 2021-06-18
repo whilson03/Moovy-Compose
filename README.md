@@ -11,6 +11,8 @@ Moovy is a simple Jetpack Compose project built using [The Movie DB](https://www
 
 
 ## How to build on your environment
+Clone your repository and open it in the latest [Android Studio (Canary build)](https://developer.android.com/studio/preview).
+
 Add your [The Movie DB](https://www.themoviedb.org)'s API key in your `local.properties` file.
 
 ```
