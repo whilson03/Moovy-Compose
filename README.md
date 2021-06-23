@@ -2,10 +2,17 @@
 Moovy is a simple Jetpack Compose project built using [The Movie DB](https://www.themoviedb.org) based on Kotlin MVVM architecture.
 <br>
 
-![Home](./screens/home.png)
-![Detail](./screens/detail_screen.mp4)
+<div class="row">
+<img src="screens/home.png" height="800" alt="screenshot"/>
+<img src="https://user-images.githubusercontent.com/34584911/121948802-8f280b80-cd0c-11eb-857d-03fdd771fccd.gif" height="800" alt="screenshot"/>
+ </div>
+
+
+
 
 ## How to build on your environment
+Clone your repository and open it in the latest [Android Studio (Canary build)](https://developer.android.com/studio/preview).
+
 Add your [The Movie DB](https://www.themoviedb.org)'s API key in your `local.properties` file.
 
 ```
