@@ -4,7 +4,7 @@ Moovy is a simple Jetpack Compose project built using [The Movie DB](https://www
 
 <div class="row">
 <img src="screens/home.png" height="800" alt="screenshot"/>
-<img src="https://user-images.githubusercontent.com/34584911/121948802-8f280b80-cd0c-11eb-857d-03fdd771fccd.gif" height="800" alt="screenshot"/>
+<img src="https://user-images.githubusercontent.com/34584911/123158851-25e97c00-d421-11eb-853a-a81c6730ea42.gif" height="800" alt="screenshot"/>
  </div>
 
 
