@@ -22,13 +22,15 @@ import com.olabode.wilson.moovy.models.Movie
 import com.olabode.wilson.moovy.models.TvSeries
 import com.olabode.wilson.moovy.ui.theme.MoovyTheme
 import com.olabode.wilson.moovy.ui.theme.amber
+import com.olabode.wilson.moovy.ui.theme.deepGreen
+import com.olabode.wilson.moovy.ui.theme.deepRed
 import com.olabode.wilson.moovy.utils.ImagesUtils
 
 private fun getColorForRating(value: Float = 0f): Color {
     return when {
-        value >= 7 -> Color.Green
+        value >= 7 -> deepGreen
         value >= 5 -> amber
-        else -> Color.Red
+        else -> deepRed
     }
 }
 

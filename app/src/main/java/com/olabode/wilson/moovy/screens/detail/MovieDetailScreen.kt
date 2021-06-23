@@ -44,23 +44,8 @@ fun MovieDetailScreen(
     val casts = viewModel.casts.value
 
     if (loading) {
-        Surface(color = deepBlue) {
-            Column {
-                Row(
-                    modifier = Modifier
-                        .padding(16.dp)
-                        .fillMaxWidth()
-                ) {
-
-                    SquircleIconButton(
-                        icon = Icons.Rounded.ArrowBack,
-                    ) {
-                        onNavigateBack()
-                    }
-                }
-                LoadingScreen()
-            }
-
+        MovieDetailLoadingSkeleton{
+            onNavigateBack()
         }
     } else {
         movie?.let {
@@ -73,25 +58,11 @@ fun MovieDetailScreen(
 }
 
 @Composable
-fun LoadingScreen(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-
-}
-
-
-@Composable
 private fun MovieDetailContent(
     movie: Movie,
     actors: List<Cast>,
     onBackPressed: () -> Unit
 ) {
-
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -224,28 +195,7 @@ private fun MovieDetailContent(
     }
 }
 
-@Composable
-fun MoreInfoTitle(title: String) {
-    Text(
-        text = title,
-        overflow = TextOverflow.Ellipsis,
-        maxLines = 1,
-        color = Color.White,
-        fontSize = 12.sp
-    )
-}
 
-
-@Composable
-fun MoreInfoValue(text: String) {
-    Text(
-        text = text,
-        overflow = TextOverflow.Ellipsis,
-        maxLines = 1,
-        color = Color.Gray,
-        fontSize = 12.sp
-    )
-}
 
 
 @Preview(showBackground = true)

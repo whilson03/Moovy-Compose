@@ -7,3 +7,5 @@ val lightBlue = Color(0xFF5CA0D3)
 
 val goldenYellow  = Color(0xFFFFDF00)
 val amber  = Color(0xFFFFBF00)
+val deepGreen = Color(0xFF4CAF50)
+val deepRed = Color(0xFFA70B17)
